@@ -1,0 +1,17 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: my-mutating-webhook
+webhooks:
+  - name: admission-controller.example.com
+    clientConfig:
+      url: https://admission-controller-service:443/validate
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUQ2ekNDQXRPZ0F3SUJBZ0lVRjdqbzh2aDAvaU0vMkZpQ1F2YTZQeCtFQUZFd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2dZUXhDekFKQmdOVkJBWVRBbWx1TVJJd0VBWURWUVFJREFscllYSnVZWFJoYTJFeEVqQVFCZ05WQkFjTQpDV0psYm1kaGJIVnlkVEVSTUE4R0ExVUVDZ3dJWTJWeWRtVnNiRzh4RHpBTkJnTlZCQXNNQm1SbGRtOXdjekVwCk1DY0dDU3FHU0liM0RRRUpBUllhWVhOb1ptRnhZbUZ5YTJGMGFUYzROa0JuYldGcGJDNWpiMjB3SGhjTk1qTXcKT0RNd01EWTBNekUxV2hjTk1qUXdPREk1TURZME16RTFXakNCaERFTE1Ba0dBMVVFQmhNQ2FXNHhFakFRQmdOVgpCQWdNQ1d0aGNtNWhkR0ZyWVRFU01CQUdBMVVFQnd3SlltVnVaMkZzZFhKMU1SRXdEd1lEVlFRS0RBaGpaWEoyClpXeHNiekVQTUEwR0ExVUVDd3dHWkdWMmIzQnpNU2t3SndZSktvWklodmNOQVFrQkZocGhjMmhtWVhGaVlYSnIKWVhScE56ZzJRR2R0WVdsc0xtTnZiVENDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQgpBTHRZcEMzSHVvNkRnN2ZIZVM2MXUwQVJ6aTJ1amFSazh3VExxd292OTNFRU1rS1kxbzZQdHpzRVM0aUkxVXA2CnV6bVh4OHd2VDZNNVBFMnhSbUNvbE4vOHEvQ0pjUzdkckpRd1J0OUEvYi9xRzgyUnFwWUJJRUlCQ0pXSVR6K0cKaXRjUEZHdDhBOEV6ZHBuZ1B4bllDSlFldTkyQVdCRTNoWFlTSDRGNDRzbFBZS2tJd2ZmMzZreUh2c1JieHlpNQpRTjdxeTF5VVFPaDlJblkxSWd4UTRMb0dZck52K2cyYnJRZUpkYVZJVW9DM1piZ28yR1BMWmYyMEc2MG1FTU9YCmUxUmRnNGZFdmw4dTBKeHJsdTFONDArK0xoTlpHTG1QQTRJaE9TUDlSekl4dmZnY25LRWdZRUc4SVE4TjFNYUEKWG5mbUhPK0UvQkVvR3VZazVzTVdkZk1DQXdFQUFhTlRNRkV3SFFZRFZSME9CQllFRk9mWFBuZ1FCY0ZuUDlFbQpvcEswQmI5QndENm9NQjhHQTFVZEl3UVlNQmFBRk9mWFBuZ1FCY0ZuUDlFbW9wSzBCYjlCd0Q2b01BOEdBMVVkCkV3RUIvd1FGTUFNQkFmOHdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBSGltSHJ1ZW9HM21MTVo1bDF1VUJZZGsKWWFpU2hNejBHOGVuU2ExNUM0ZFhvUVZsMk56eTB2T0ZQZEQ1VzZHVXlBOUlldHZEbytWaFpncFlrTWJVVGw0TQpTR21ZN1BaMGtjMjZ1dnRUYXJJT0NIWG1ZRnZ5SWEyeHB6OXNRcm95TTQreVBXamNCWjZLc1FwMWdBQlZpeWpDCncxVm0xWHY4UmZvaFlxcHlWd3RNM0FQMlNvV0ExajFBQlgwcDJNMGtpV1AzSlJIUXVrMlgwdUtpK3hKTlExZ2oKcmxFQWwzT3lEa2dxYXVaMDF6MVcyR2xpSkxHdExSNE1VaWxZcFlFYjc5akM0ZkExR1NaQVY3L1B3SjBxSTMzQQpndkRjOGo2c2ZOaXpNbWxvcWVyeUp0TVF0dzlmdGlaWWdKT3hpcTJyc2FZKzlwZ0twYlVqZjVjUjBkTlY5dmc9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    rules:
+      - operations: ["CREATE", "UPDATE"]  # Specify the operations you want to trigger the webhook (e.g., CREATE, UPDATE).
+        apiGroups: [""]                   # Specify the API groups for which the webhook should be invoked. An empty string ("") means all API groups.
+        apiVersions: ["v1"]               # Specify the API versions for which the webhook should be invoked.
+        resources: ["pods", "deployments"] # Specify the resources (e.g., pods, deployments) for which the webhook should be invoked.
+        scope: "Namespaced"               # Specify the scope (Namespaced or Cluster) in which the webhook should be invoked.
+    sideEffects: None             # Specify the side effects, can be "None" or "NoneOnDryRun"
+    admissionReviewVersions: ["v1"]
